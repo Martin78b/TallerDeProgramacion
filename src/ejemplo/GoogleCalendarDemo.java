@@ -22,9 +22,10 @@ import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
-
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Collections;
 import java.util.Date;
 import java.util.TimeZone;
@@ -62,10 +63,10 @@ public class GoogleCalendarDemo {
         // (JavaScript Object Notation). Para ello se usa la fábrica de objetos
         // JSON y el archivo de configuración se carga como un recurso de l
         // aplicación.
-        GoogleClientSecrets mClientSecrets =
-                GoogleClientSecrets.load(JSON_FACTORY,
-                                         GoogleCalendarDemo.class.getResourceAsStream("./client_secrets.json"));
-
+        GoogleClientSecrets mClientSecrets;
+        Reader lector = new InputStreamReader(GoogleCalendarDemo.class.getResourceAsStream("./client_secrets.json"));
+        mClientSecrets = GoogleClientSecrets.load(JSON_FACTORY, lector);
+       
         // Se configura el repositorio que se utilizará para almacenar las credenciales.
         FileCredentialStore mCredentialStore =
                 new FileCredentialStore(new File(System.getProperty("user.home"), ".credentials/calendar.json"), JSON_FACTORY);
